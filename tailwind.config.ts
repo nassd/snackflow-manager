@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,25 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom colors for Snackflow
+				savory: {
+					DEFAULT: '#4CAF50',
+					50: '#e8f5e9',
+					100: '#c8e6c9',
+					200: '#a5d6a7',
+					300: '#81c784',
+					400: '#66bb6a',
+					500: '#4CAF50',
+					600: '#43a047',
+					700: '#388e3c',
+					800: '#2e7d32',
+					900: '#1b5e20',
+				},
+				food: {
+					asian: '#FF9800',
+					italian: '#F44336',
+					western: '#4CAF50',
 				}
 			},
 			borderRadius: {
@@ -84,11 +104,26 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				'fade-in': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				'fade-up': {
+					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
+				},
+				'scale-in': {
+					'0%': { opacity: '0', transform: 'scale(0.95)' },
+					'100%': { opacity: '1', transform: 'scale(1)' }
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.3s ease-out',
+				'fade-up': 'fade-up 0.4s ease-out',
+				'scale-in': 'scale-in 0.2s ease-out',
 			}
 		}
 	},
