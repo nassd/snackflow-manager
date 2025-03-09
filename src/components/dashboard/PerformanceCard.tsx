@@ -56,7 +56,7 @@ export default function PerformanceCard() {
             r="40"
             fill="transparent"
             strokeDasharray={`${2 * Math.PI * 40}`}
-            strokeDashoffset={`${2 * Math.PI * 40 * (1 - percentage /, 100)}`}
+            strokeDashoffset={`${2 * Math.PI * 40 * (1 - percentage / 100)}`}
             transform="rotate(-90 50 50)"
           />
         </svg>
