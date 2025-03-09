@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, LogOut, User, Settings } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
@@ -11,9 +11,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
+  const { user, profile, signOut } = useAuth();
+  
+  const getInitials = () => {
+    if (profile?.full_name) {
+      return profile.full_name.split(' ').map((n: string) => n[0]).join('').toUpperCase();
+    }
+    if (profile?.username) {
+      return profile.username.substring(0, 2).toUpperCase();
+    }
+    return user?.email?.substring(0, 2).toUpperCase() || 'US';
+  };
+
+  const getDisplayName = () => {
+    if (profile?.full_name) return profile.full_name;
+    if (profile?.username) return profile.username;
+    return user?.email?.split('@')[0] || 'User';
+  };
   
   return (
     <header className="h-16 border-b border-border bg-background/95 backdrop-blur-sm flex items-center justify-between px-6 sticky top-0 z-10">
@@ -45,11 +63,11 @@ export default function Header() {
           <DropdownMenuTrigger asChild>
             <div className="flex items-center gap-2 cursor-pointer">
               <Avatar className="h-8 w-8 border border-border">
-                <AvatarImage src="" alt="User" />
-                <AvatarFallback className="bg-savory-100 text-savory-800 text-sm">JS</AvatarFallback>
+                <AvatarImage src={profile?.avatar_url || ""} alt={getDisplayName()} />
+                <AvatarFallback className="bg-savory-100 text-savory-800 text-sm">{getInitials()}</AvatarFallback>
               </Avatar>
               <div className="text-sm text-left hidden sm:block">
-                <div className="font-medium">Jhon Smith</div>
+                <div className="font-medium">{getDisplayName()}</div>
                 <div className="text-xs text-muted-foreground">User</div>
               </div>
             </div>
@@ -57,11 +75,19 @@ export default function Header() {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
+            <DropdownMenuItem>
+              <User className="mr-2 h-4 w-4" />
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Log out</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signOut()}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Log out
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
