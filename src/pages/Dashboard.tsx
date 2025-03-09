@@ -7,6 +7,9 @@ import PopularFoodChart from "@/components/dashboard/PopularFoodChart";
 import PerformanceCard from "@/components/dashboard/PerformanceCard";
 import StatsCard from "@/components/dashboard/StatsCard";
 import MonthlyActivityChart from "@/components/dashboard/MonthlyActivityChart";
+import OrdersTable from "@/components/dashboard/OrdersTable";
+import ProductsTable from "@/components/dashboard/ProductsTable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Dashboard() {
   return (
@@ -62,22 +65,41 @@ export default function Dashboard() {
         />
       </div>
       
-      {/* Main charts row */}
-      <div>
-        <OrderRateChart />
-      </div>
-      
-      {/* Bottom charts row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2">
-          <MonthlyActivityChart />
-        </div>
+      {/* Orders and products tables */}
+      <Tabs defaultValue="orders" className="w-full">
+        <TabsList>
+          <TabsTrigger value="orders">Commandes</TabsTrigger>
+          <TabsTrigger value="products">Produits</TabsTrigger>
+          <TabsTrigger value="charts">Graphiques</TabsTrigger>
+        </TabsList>
         
-        <div className="space-y-6">
-          <PopularFoodChart />
-          <PerformanceCard />
-        </div>
-      </div>
+        <TabsContent value="orders" className="mt-6">
+          <OrdersTable />
+        </TabsContent>
+        
+        <TabsContent value="products" className="mt-6">
+          <ProductsTable />
+        </TabsContent>
+        
+        <TabsContent value="charts" className="mt-6 space-y-6">
+          {/* Main charts row */}
+          <div>
+            <OrderRateChart />
+          </div>
+          
+          {/* Bottom charts row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="md:col-span-2">
+              <MonthlyActivityChart />
+            </div>
+            
+            <div className="space-y-6">
+              <PopularFoodChart />
+              <PerformanceCard />
+            </div>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
