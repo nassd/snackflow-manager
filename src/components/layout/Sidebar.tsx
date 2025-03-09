@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -7,7 +6,7 @@ import {
   UtensilsCrossed, 
   Heart, 
   MessageSquare, 
-  ClockHistory, 
+  Clock, 
   Bell, 
   Receipt, 
   ChefHat, 
@@ -140,7 +139,7 @@ export default function Sidebar() {
           active={location.pathname === '/messages'} 
         />
         <NavItem 
-          icon={ClockHistory} 
+          icon={Clock} 
           label="Order History" 
           to="/order-history" 
           active={location.pathname === '/order-history'} 
