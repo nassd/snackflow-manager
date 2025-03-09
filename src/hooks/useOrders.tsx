@@ -55,7 +55,12 @@ export function useOrders() {
       throw new Error(error.message);
     }
 
-    return data || [];
+    // Type casting to ensure data conforms to Order[] type
+    return (data || []).map(order => ({
+      ...order,
+      status: (order.status as OrderStatus) || "en cours",
+      total_amount: Number(order.total_amount) || 0
+    }));
   };
 
   // Fetch order items with product details

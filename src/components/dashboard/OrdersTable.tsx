@@ -99,12 +99,21 @@ export default function OrdersTable() {
 
   // Sort orders
   const sortedOrders = [...orders].sort((a, b) => {
-    if (sortField === "total_amount" || sortField === "created_at") {
-      return sortDirection === "asc"
-        ? a[sortField] - b[sortField]
-        : b[sortField] - a[sortField];
+    if (sortField === "total_amount") {
+      // Ensure we're comparing numbers
+      const valueA = Number(a[sortField]) || 0;
+      const valueB = Number(b[sortField]) || 0;
+      return sortDirection === "asc" ? valueA - valueB : valueB - valueA;
     }
     
+    if (sortField === "created_at") {
+      // Convert dates to timestamps for comparison
+      const dateA = new Date(a[sortField] || '').getTime();
+      const dateB = new Date(b[sortField] || '').getTime();
+      return sortDirection === "asc" ? dateA - dateB : dateB - dateA;
+    }
+    
+    // For text fields
     const valueA = (a[sortField] || "").toString().toLowerCase();
     const valueB = (b[sortField] || "").toString().toLowerCase();
     
