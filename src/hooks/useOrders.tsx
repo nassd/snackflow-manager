@@ -135,11 +135,14 @@ export function useOrders() {
 
         if (itemError) throw itemError;
 
-        // Update product stock
-        const { error: updateError } = await supabase.rpc("update_stock_quantity", {
-          p_product_id: item.product_id,
-          p_quantity: item.quantity,
-        });
+        // Update product stock - Fixed type issue here
+        const { error: updateError } = await supabase.rpc(
+          "update_stock_quantity", 
+          {
+            p_product_id: item.product_id,
+            p_quantity: item.quantity,
+          }
+        );
 
         if (updateError) throw updateError;
       }
@@ -219,12 +222,15 @@ export function useOrders() {
 
       if (deleteError) throw deleteError;
 
-      // 3. Restore product stock quantities
+      // 3. Restore product stock quantities - Fixed type issue here
       for (const item of items || []) {
-        const { error: updateError } = await supabase.rpc("restore_stock_quantity", {
-          p_product_id: item.product_id,
-          p_quantity: item.quantity,
-        });
+        const { error: updateError } = await supabase.rpc(
+          "restore_stock_quantity", 
+          {
+            p_product_id: item.product_id,
+            p_quantity: item.quantity,
+          }
+        );
 
         if (updateError) throw updateError;
       }
@@ -251,16 +257,19 @@ export function useOrders() {
     return updateOrder(id, { status });
   };
 
-  // Calculate profit margin for an order
+  // Calculate profit margin for an order - Fixed type issue here
   const calculateProfitMargin = async (orderId: string): Promise<number> => {
     try {
-      const { data, error } = await supabase.rpc("calculate_profit_margin", {
-        p_order_id: orderId,
-      });
+      const { data, error } = await supabase.rpc(
+        "calculate_profit_margin", 
+        {
+          p_order_id: orderId,
+        }
+      );
 
       if (error) throw error;
 
-      return data || 0;
+      return Number(data) || 0;
     } catch (error) {
       console.error("Error calculating profit margin:", error);
       toast({

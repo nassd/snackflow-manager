@@ -163,7 +163,26 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      calculate_profit_margin: {
+        Args: {
+          p_order_id: string
+        }
+        Returns: number
+      }
+      restore_stock_quantity: {
+        Args: {
+          p_product_id: string
+          p_quantity: number
+        }
+        Returns: undefined
+      }
+      update_stock_quantity: {
+        Args: {
+          p_product_id: string
+          p_quantity: number
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
